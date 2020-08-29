@@ -1,6 +1,6 @@
 endpoint: https://us1.prisma.sh/jackoss-e32cac/prismagram/dev
-datamodel: datamodel.prisma
+datamodel: datamodel.graphql
 
 generate:
-  - generator: typescript-client
+  - generator: javascript-client
     output: ./generated/prisma-client/
