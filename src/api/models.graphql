@@ -56,3 +56,10 @@ type Message {
   to: User!
   room: Room!
 }
+
+
+#강한 결합때문에 2중 참조가 안된다. 따라서, 이런식으로 원하는 값을 설정해주면 된다.
+type UserProfile {
+  user: User!
+  posts: [Post!]!
+}
