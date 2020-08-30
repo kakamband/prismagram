@@ -12,5 +12,11 @@ export default {
                 posts
             }
         }
+    },
+    User: {
+        fullName: (parent) => {
+            console.log('parent', parent);
+            return `${parent.firstName} ${parent.lastName}`;
+        }
     }
 }
