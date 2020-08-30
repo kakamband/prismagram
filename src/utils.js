@@ -7,12 +7,14 @@ import { adjectives, nouns } from "./words";
 import nodemailer from "nodemailer";
 import sgTransport from "nodemailer-sendgrid-transport";
 
+import jwt from "jsonwebtoken";
+
 export const generateSecret = () => {
     const randomNumber = Math.floor(Math.random() * adjectives.length);
     return `${adjectives[randomNumber]} ${nouns[randomNumber]}`
 };
 
-console.log(process.env.SENDGRID_USERNAME,process.env.SENDGRID_PASSWORD)
+// console.log(process.env.SENDGRID_USERNAME,process.env.SENDGRID_PASSWORD)
 
 export const sendMail = (email) => {
     const options = {
@@ -31,7 +33,9 @@ export const sendSecretMail = (address, secret) => {
         from: "sangwon@prismagram.com",
         to: address,
         subject: "Login Secret for prismagram🐤",
-        html: `Hello! Your login secret is ${secret}.<br/>Copy paste on the app/website to log in`
+        html: `Hello! Your login secret is <b>${secret}</b>.<br/>Copy paste on the app/website to log in`
     }
     return sendMail(email)
 }
+
+export const generateToken = (id) => jwt.sign({id}, process.env.JWT_SECRET);
