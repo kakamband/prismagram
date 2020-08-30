@@ -22,7 +22,7 @@ export default {
                         }
                     ]
                 })
-                if(existingLike){//좋아요가 이미 있을 때
+                if(existingLike){//좋아요가 이미 존재할 때
                     //TO DO
                 }else{//좋아요가 없을 때 좋아요 생성
                     await prisma.createLike({
