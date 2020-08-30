@@ -1,3 +1,4 @@
+import {prisma} from "~/../generated/prisma-client";
 import { isAuthenticated } from "../../../middlewares";
 
 export default {
@@ -6,24 +7,25 @@ export default {
             isAuthenticated(request);
             const {postId} = args;
             const {user} = request;
+            const filterOptions = {
+                AND: [
+                    {
+                        user:{
+                            id: user.id
+                        }
+                    },
+                    {
+                        post:{
+                            id: postId
+                        }
+                    }
+                ]
+            }
 
             try{
-                const existingLike = await prisma.$exists.like({
-                    AND: [
-                        {
-                            user:{
-                                id: user.id
-                            }
-                        },
-                        {
-                            post:{
-                                id: postId
-                            }
-                        }
-                    ]
-                })
+                const existingLike = await prisma.$exists.like(filterOptions)
                 if(existingLike){//좋아요가 이미 존재할 때
-                    //TO DO
+                    await prisma.deleteManyLikes(filterOptions);
                 }else{//좋아요가 없을 때 좋아요 생성
                     await prisma.createLike({
                         user: {
@@ -39,7 +41,8 @@ export default {
                     });
                 }
                 return true;
-            } catch {
+            } catch(error) {
+                console.log(error)
                 return false;
             }
         }
