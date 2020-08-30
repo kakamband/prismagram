@@ -5,7 +5,8 @@ type User {
   firstName: String
   lastName: String
   fullName: String
-  amIFollowing: Boolean!
+  isFollowing: Boolean!
+  isSelf: Boolean!
   bio: String
   followers: [User!]!
   following: [User!]!
@@ -64,6 +65,6 @@ type Message {
 #강한 결합때문에 2중 참조가 안된다. 따라서, 이런식으로 원하는 값을 설정해주면 된다.
 #아래와 같이 선언을 해주던지, fragment를 선언해서 하던지 2가지 방법 중 하나를 택해서 하면 된다. fragment가 더 빠르긴 함.
 type UserProfile {
-  user: User
+  user: User!
   posts: [Post!]!
 }
