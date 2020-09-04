@@ -13,10 +13,14 @@ export default {
             .aggregate()
             .count()
             
+            const files = await prisma.post({id}).file()
+            const user = await prisma.post({id}).user()
             return {
                 post,
                 comments,
-                likeCount
+                likeCount,
+                files,
+                user
             }
         }
     }
