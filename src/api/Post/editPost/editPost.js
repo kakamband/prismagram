@@ -12,12 +12,12 @@ export default {
             const { user } = request;
             const post = await prisma.$exists.post({ id, user: { id: user.id } });
             if (post) {
-                if(action === "EDIT"){
+                if(action === EDIT){
                     return prisma.updatePost({
                         data: { caption, location },
                         where: { id }
                     }).$fragment(FULL_POST_FRAGMENT)//FRAGMENT 붙이면 user들 정보까지 볼 수 있음
-                }else if(action === "DELETE"){
+                }else if(action === DELETE){
                     return prisma.deletePost({id})
                 } 
             } else {
