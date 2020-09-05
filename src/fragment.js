@@ -2,6 +2,8 @@ export const USER_FRAGMENT = `
         id
         username
         email
+        firstName
+        lastName
 `;
 
 export const COMMENT_FRAGMENT = `
