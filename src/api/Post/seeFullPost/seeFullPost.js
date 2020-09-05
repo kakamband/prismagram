@@ -1,27 +1,8 @@
 import { prisma } from "~/../generated/prisma-client";
-import { COMMENT_FRAGMENT } from "../../../fragment";
+import { FULL_POST_FRAGMENT } from "../../../fragment";
 
 export default {
     Query: {
-        seeFullPost: async (_, args) => {
-            const { id } = args;
-            const post = await prisma.post({ id });
-            const comments = await prisma.post({ id }).comments().$fragment(COMMENT_FRAGMENT);//이중 참조할 수 있도록 fragment로 설정해줌.
-            const likeCount = await prisma.likesConnection({ 
-                where: { post: { id } } 
-            })
-            .aggregate()
-            .count()
-            
-            const files = await prisma.post({id}).file()
-            const user = await prisma.post({id}).user()
-            return {
-                post,
-                comments,
-                likeCount,
-                files,
-                user
-            }
-        }
+        seeFullPost: async  (_, {id}) => prisma.post({ id }).$fragment(FULL_POST_FRAGMENT)
     }
 }
